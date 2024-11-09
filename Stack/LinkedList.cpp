@@ -6,12 +6,19 @@
 * input: head - the start of the linked list, newNum - the number we will add to the list
 * output: none
 */
-void push(LinkedList** head, int newNum)
+void insert(LinkedList** head, int newNum)
 {
 	LinkedList* newHead = new LinkedList;
 	
 	newHead->num = newNum;
-	newHead->next = *head;
+	if (*head != NULL)
+	{
+		newHead->next = *head;
+	}
+	else
+	{
+		newHead->next = NULL;
+	}
 	*head = newHead;
 }
 
@@ -20,8 +27,14 @@ void push(LinkedList** head, int newNum)
 * input: head - the head of the linkedlist
 * output: the number in the head
 */
-int pop(LinkedList** head)
+int extract(LinkedList** head)
 {
+
+	if (*head == NULL)
+	{
+		return -1;
+	}
+
 	LinkedList* temp = *head;
 	int extract = temp->num;
 

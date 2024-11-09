@@ -1,3 +1,4 @@
+
 #include "stack.h"
 #include <iostream>
 
@@ -6,13 +7,9 @@
 * input: head - the start of the Stack, newNum - the number we will add to the stack
 * output: none
 */
-void push(Stack** s, unsigned int element)
+void push(Stack* s, unsigned int element)
 {
-	Stack* newHead = new Stack;
-
-	newHead->element = element;
-	newHead->next = *s;
-	*s = newHead;
+	insert(&(s->list), element);
 }
 
 /*
@@ -20,20 +17,9 @@ void push(Stack** s, unsigned int element)
 * input: s - the head of the stack
 * output: the element or -1 (if the stack is empty)
 */
-int pop(Stack** s)
+int pop(Stack* s)
 {
-	Stack* temp = *s;
-	int extract = temp->element;
-
-	if (temp->next == NULL)
-	{
-		return -1;
-	}
-
-	*s = temp->next;
-	delete(temp);
-
-	return extract;
+	return extract(&(s->list));
 }
 
 
@@ -44,8 +30,7 @@ int pop(Stack** s)
 */
 void initStack(Stack* s)
 {
-	s->element = 0;
-	s->next = NULL;
+	s->list = NULL;
 }
 
 
@@ -56,12 +41,29 @@ void initStack(Stack* s)
 */
 void cleanStack(Stack* s)
 {
-	Stack* temp = NULL;
-	while (s != NULL)
+	LinkedList* list = s->list;
+	LinkedList* temp = NULL;
+	while (s->list != NULL)
 	{
-		temp = s;
-		s = s->next;
+		temp = list;
+		list = list->next;
 		delete(temp);
 		temp = NULL;
 	}
+}
+
+/*
+* this function will return true if the stack is empty or false if not
+* input: s - the stack
+* output: true/false
+*/
+bool isEmpty(Stack* s)
+{
+	int temp = extract(&(s->list));
+	if (temp == -1)
+	{
+		return true;
+	}
+	push(s, temp);
+	return false;
 }
