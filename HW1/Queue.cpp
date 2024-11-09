@@ -31,13 +31,14 @@ void cleanQueue(Queue* q)
 */
 void enqueue(Queue* q, unsigned int newValue)
 {
+	//if the queue is filled
 	if (q->count >= q->maxSize)
 	{
-		std::cout << "You reached the limit size of your queue.\n" << std::endl;
+		std::cout << "You reached the limit size of your queue." << std::endl;
 	}
 	else if (newValue < 0)
 	{
-		std::cout << "ONLY positive numbers\n" << std::endl;
+		std::cout << "ONLY positive numbers" << std::endl;
 	}
 	else
 	{
@@ -53,17 +54,18 @@ void enqueue(Queue* q, unsigned int newValue)
 */
 int dequeue(Queue* q)
 {
-	int temp = q->elements[0];// getting the number we will return
-	int i = 0;
+	int firstNum = q->elements[0];// getting the number we will return
+	int i = 0, temp = 1;
 
 	// a loop that moves the array one time to the left and overwrite the first value in the queue
 	for (i = 0; i < q->count-1; i++)
 	{
-		q->elements[i] = q->elements[i++];
+		q->elements[i] = q->elements[temp];
+		temp++;
 	}
 	q->count--;//decreasing the count bea=cause we got rid of the first value
 
-	return temp;
+	return firstNum;
 }
 
 /*
